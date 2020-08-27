@@ -1,6 +1,19 @@
-#in short, it's to write a function that looks for files with duplicate contents and flags them as the sample below:
-#
-#def find_duplicates(rootpath)
-#-> [['a.txt', 'foo/c.txt'], ['b.txt', 'foo/bar/e.txt']]
-#
-#the files live in a directory structure like this one:
+import os
+import filecmp
+
+texts = []
+output = []
+
+for root, dirs, files in os.walk("./root", topdown=True):
+    for f in files: 
+        n = root+"/"+f
+        texts.append((f,n))
+
+for i,t in enumerate(texts): 
+    for j,z in enumerate(texts): 
+        if i < j:
+            if filecmp.cmp(t[1],z[1]):
+                output.append([t[1],z[1]])
+                
+for o in output:
+    print(o)
